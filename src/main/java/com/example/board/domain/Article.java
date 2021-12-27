@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -23,6 +24,9 @@ public class Article extends Timestamped{
 
     @Column(nullable = false)
     private String content;
+
+    @OneToMany(mappedBy="article")
+    private List<Comment> comments;
 
     public Article(ArticleRequestDto requestDto) {
         this.title = requestDto.getTitle();

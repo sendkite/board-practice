@@ -15,3 +15,5 @@
     + JQuery Selector는 변수에 담아서 사용하기
     + 자바스크립트 비교 연산자는 == 말고 ===을 더 권장(==은 '값' 비교라서 형변환을 가져옴.)
     + JPA로 생성/수정시간 자동 생성하기 -> 메인 application에 @EnableJpaAuditing 해주어야 사용할 수 있음!
+    + ManyToOne으로 연결한 article table과 comment table이 서로 무한이 참조 -> @JsonIgnore로 해결
+
