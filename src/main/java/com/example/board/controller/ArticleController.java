@@ -14,12 +14,12 @@ public class ArticleController {
     private final ArticleService articleService;
 
     @PostMapping("/article")
-    public Article savePost(@RequestBody ArticleRequestDto articleRequestDto) throws IOException {
+    public Article savePost(@RequestBody ArticleRequestDto articleRequestDto) {
         return articleService.save(articleRequestDto);
     }
 
     @GetMapping("/article/{id}")
-    public Article readPost(@PathVariable Long id) throws IOException {
+    public Article readPost(@PathVariable Long id) {
         return articleService.getPost(id);
     }
 }

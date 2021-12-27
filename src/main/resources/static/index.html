@@ -43,13 +43,13 @@
             margin: auto;
         }
 
-        /*#post-box {*/
-        /*    width: 500px;*/
-        /*    margin: 20px auto;*/
-        /*    padding: 50px;*/
-        /*    border: black solid;*/
-        /*    border-radius: 5px;*/
-        /*}*/
+        #post-box {
+            width: 500px;
+            margin: 20px auto;
+            padding: 50px;
+            border: black solid;
+            border-radius: 5px;
+        }
     </style>
     <script>
         function writeArticle() {
@@ -76,24 +76,123 @@
                 }
             })
         }
-    </script>
 
+        function openClose() {
+            const postBox = $("#post-box");
+            const postBtn = $("#btn-post-box");
+            if (postBox.css("display") === "block") {
+                postBox.hide();
+                postBtn.text("포스팅 박스 열기");
+            } else {
+                $("#post-url").val('');
+                $("#post-comment").val('');
+                postBox.show();
+                postBtn.text("포스팅 박스 닫기");
+            }
+        }
+
+        function openCloseLogin() {
+            $('#login-id').val('');
+            $('#login-pwd').val('');
+            $('#loginModal').modal('show');
+        }
+
+        function openCloseJoin() {
+            $('#joinModal').modal('show');
+        }
+
+    </script>
 </head>
 
 <body>
 <div class="wrap">
     <div class="jumbotron">
         <h1 class="display-4">Hello, weekly Test</h1>
-        <p class="lead">이번주 문제는 매우 쉬워요!!</p>
+        <p class="lead">질문해주세요!</p>
         <hr class="my-4">
-        <p id="article"></p>
+        <p class="lead">
+            <button onclick="openClose()" id="btn-post-box" type="button" class="btn btn-primary">포스팅 박스 열기</button>
+            <button onclick="openCloseLogin()" id="btn-login" type="button" class="btn btn-secondary">로그인</button>
+            <button onclick="logout()" id="btn-logout" type="button" class="btn btn-danger" style="display:none">로그아웃
+            </button>
+            <button onclick="openCloseJoin()" id="btn-join" type="button" class="btn btn-success">회원가입</button>
+        </p>
     </div>
-    <div class="form-group">
-        <label for="content">짧은 글 저장</label>
-        <textarea class="form-control" id="content" rows="3"></textarea>
+    <div id="post-box" class="form-post" style="display:none">
+        <div>
+            <div class="form-group">
+                <label for="title">제목</label>
+                <input id="title" class="form-control" placeholder="">
+            </div>
+            <div class="form-group">
+                <label for="content">간단한 내용</label>
+                <textarea id="content" class="form-control" rows="2"></textarea>
+            </div>
+            <button type="button" class="btn btn-primary" onclick="writeArticle()">저장하기</button>
+        </div>
     </div>
-    <button type="button" class="btn btn-primary" onclick="writeArticle()">저장하기</button>
 </div>
-</body>
 
+<!-- Login Modal -->
+<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">로그인</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label for="login-id" class="col-form-label">아이디</label>
+                        <input type="text" class="form-control" id="login-id">
+                    </div>
+                    <div class="form-group">
+                        <label for="login-pwd" class="col-form-label">패스워드</label>
+                        <input type="password" class="form-control" id="login-pwd">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onclick="login()">로그인</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Join Modal -->
+<div class="modal fade" id="joinModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">회원가입</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label for="join-id" class="col-form-label">아이디</label>
+                        <input type="text" class="form-control" id="join-id">
+                    </div>
+                    <div class="form-group">
+                        <label for="join-pwd" class="col-form-label">패스워드</label>
+                        <input type="password" class="form-control" id="join-pwd">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onclick="join()">회원가입</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+</body>
 </html>
