@@ -52,6 +52,9 @@
         }
     </style>
     <script>
+        $(document).ready(()=>{
+            readArticleList();
+        });
         function openClose() {
             const postBox = $("#post-box");
             const postBtn = $("#btn-post-box");
@@ -109,7 +112,8 @@
                 type: "GET",
                 url: `/articles`,
                 success: function (response) {
-                    addHtml(response)
+                    addHtml(response);
+                    openClose();
                 }
             })
         }
@@ -118,9 +122,10 @@
             let listHtml = `
             `;
             for (let i = 0; i < article.length; i++) {
+                const count = i + 1;
                 listHtml += `
                     <tr>
-                          <th scope="row">인덱스</th>
+                          <th scope="row">${count}</th>
                           <td><a href="view.html?idx=${article[i]['idx']}">${article[i]['title']}</td>
                           <td>글쓴이</td>
                           <td>#댓글수</td>
@@ -148,7 +153,7 @@
             <button onclick="openCloseJoin()" id="btn-join" type="button" class="btn btn-success">회원가입</button>
         </p>
     </div>
-    <div id="post-box" class="form-post" style="display:none">
+    <div id="post-box" class="form-post">
         <div>
             <div class="form-group">
                 <label for="title">제목</label>
