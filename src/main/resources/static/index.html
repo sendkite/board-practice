@@ -52,31 +52,6 @@
         }
     </style>
     <script>
-        function writeArticle() {
-            $.ajax({
-                type: "POST",
-                url: "/article",
-                contentType: 'application/json; charset=utf-8',
-                data: JSON.stringify({content: $("#content").val()}),
-                success: function (response) {
-                    $("#content").val('');
-                    if (confirm("저장된 메시지를 확인하시겠어요?")) {
-                        readArticle(response['idx'])
-                    }
-                }
-            })
-        }
-
-        function readArticle(id) {
-            $.ajax({
-                type: "GET",
-                url: `/article/${id}`,
-                success: function (response) {
-                    $("#article").html(response['content']);
-                }
-            })
-        }
-
         function openClose() {
             const postBox = $("#post-box");
             const postBtn = $("#btn-post-box");
@@ -91,16 +66,71 @@
             }
         }
 
+
         function openCloseLogin() {
             $('#login-id').val('');
             $('#login-pwd').val('');
             $('#loginModal').modal('show');
         }
 
+
         function openCloseJoin() {
             $('#joinModal').modal('show');
         }
 
+        // create
+        function writeArticle() {
+            const title = $("#title");
+            const content = $("#content");
+            // if (!title.val().trim() || content.val().trim()) {
+            //     alert("제목과 내용은 필수입니다.");
+            //     return;
+            // }
+
+            $.ajax({
+                type: "POST",
+                url: "/article",
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify({title: title.val(), content: content.val()}),
+                success: function () {
+                    title.val('');
+                    content.val('');
+                    if (confirm('저장 할까요?')) {
+                        alert('저장 성공!');
+                        readArticleList();
+                    }
+                }
+            })
+        }
+
+        // Read
+        function readArticleList() {
+            $.ajax({
+                type: "GET",
+                url: `/articles`,
+                success: function (response) {
+                    addHtml(response)
+                }
+            })
+        }
+
+        function addHtml(article) {
+            let listHtml = `
+            `;
+            for (let i = 0; i < article.length; i++) {
+                listHtml += `
+                    <tr>
+                          <th scope="row">인덱스</th>
+                          <td><a href="view.html?idx=${article[i]['idx']}">${article[i]['title']}</td>
+                          <td>글쓴이</td>
+                          <td>#댓글수</td>
+                          <td>#태그</td>
+                          <td>${article[i]['createdAt']}</td>
+                    </tr>
+                `;
+            }
+            $("#list-post").html(listHtml);
+        }
     </script>
 </head>
 
@@ -131,6 +161,22 @@
             <button type="button" class="btn btn-primary" onclick="writeArticle()">저장하기</button>
         </div>
     </div>
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">제목</th>
+            <th scope="col">글쓴이</th>
+            <th scope="col">댓글수</th>
+            <th scope="col">태그</th>
+            <th scope="col">등록일자</th>
+        </tr>
+        </thead>
+
+        <!-- 게시글 목록 -->
+        <tbody id="list-post">
+        </tbody>
+    </table>
 </div>
 
 <!-- Login Modal -->

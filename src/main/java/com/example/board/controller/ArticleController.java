@@ -6,7 +6,8 @@ import com.example.board.service.ArticleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
+import java.util.List;
+
 
 @RestController
 @RequiredArgsConstructor
@@ -16,6 +17,11 @@ public class ArticleController {
     @PostMapping("/article")
     public Article savePost(@RequestBody ArticleRequestDto articleRequestDto) {
         return articleService.save(articleRequestDto);
+    }
+
+    @GetMapping("/articles")
+    public List<Article> readPostList() {
+        return articleService.getPosts();
     }
 
     @GetMapping("/article/{id}")

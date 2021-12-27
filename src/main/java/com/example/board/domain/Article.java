@@ -13,16 +13,19 @@ import javax.persistence.*;
 @Setter
 @Getter
 @Entity
-public class Article {
-
+public class Article extends Timestamped{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     private Long idx;
 
     @Column(nullable = false)
+    private String title;
+
+    @Column(nullable = false)
     private String content;
 
     public Article(ArticleRequestDto requestDto) {
+        this.title = requestDto.getTitle();
         this.content = requestDto.getContent();
     }
 }
