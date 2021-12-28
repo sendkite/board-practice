@@ -55,6 +55,10 @@
             return results[1] || 0;
         }
 
+        $(document).ready(() => {
+            getArticleComment();
+        })
+
         function getArticle() {
             $.ajax({
                 type: "GET",
@@ -67,14 +71,14 @@
         }
         function setArticleComment() {
             const commentBody = {
-                idx : `${idx}`,
+                idx : idx,
                 comment: $("#comment").val()
             }
             $.ajax({
                 type: "POST",
                 url: `/article/comment`,
                 contentType: 'application/json; charset=utf-8',
-                data: commentBody,
+                data: JSON.stringify(commentBody),
                 success: function () {
                     alert("댓글 저장!");
                     getArticleComment();
@@ -85,15 +89,16 @@
         function getArticleComment() {
             $.ajax({
                 type: "GET",
-                url: `/article/comment`,
+                url: `/article/comment?idx=${idx}`,
                 success: function (response) {
-                    let comment = "";
-                    for (let i = 0; i < response.length; i++) {
-                        comment += `
-                            <li>${response[i].comment}</li>
+                    let commentHtml = ``;
+                    for (let i = 0; i < response['comments'].length; i++) {
+                        commentHtml += `
+                            <li>${response['comments'][i].comment}</li>
                         `
                     }
-                    $("#comment-list").html(comment);
+                    $('#comment-list').html(commentHtml);
+                    $('#comment').val('');
                 }
             });
         }

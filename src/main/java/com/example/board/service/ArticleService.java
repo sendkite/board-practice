@@ -10,7 +10,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
@@ -28,6 +27,7 @@ public class ArticleService {
         return articleRepository.findAll();
     }
 
+
     public Article getPost(Long id) {
         return articleRepository.findById(id).orElseThrow(
                 () -> new NullPointerException("해당 게시글이 존재하지 않습니다.")
@@ -42,7 +42,9 @@ public class ArticleService {
         commentRepository.save(comment);
     }
 
-    public Optional<Comment> getArticleComment(Long id) {
-        return commentRepository.findById(id);
+    public Article getArticleComment(Long idx) {
+        return articleRepository.findById(idx).orElseThrow(
+                () -> new NullPointerException("해당 게시글이 존재하지 않습니다.")
+        );
     }
 }
