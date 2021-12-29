@@ -5,6 +5,8 @@ import com.example.board.dto.ArticleCommentRequestDto;
 import com.example.board.dto.ArticleRequestDto;
 import com.example.board.service.ArticleService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -41,4 +43,10 @@ public class ArticleController {
     public Article getArticleComment(@RequestParam Long idx) {
         return articleService.getArticleComment(idx);
     }
+
+    @GetMapping("/page")
+    public Page<Article> find(Pageable pageable) {
+        return articleService.find(pageable);
+    }
+
 }

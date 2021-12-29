@@ -7,6 +7,8 @@ import com.example.board.dto.ArticleRequestDto;
 import com.example.board.repository.ArticleRepository;
 import com.example.board.repository.CommentRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -46,5 +48,9 @@ public class ArticleService {
         return articleRepository.findById(idx).orElseThrow(
                 () -> new NullPointerException("해당 게시글이 존재하지 않습니다.")
         );
+    }
+
+    public Page<Article> find(Pageable pageable) {
+        return articleRepository.findAll(pageable);
     }
 }
