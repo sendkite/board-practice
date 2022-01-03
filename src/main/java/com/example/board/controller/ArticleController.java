@@ -48,5 +48,4 @@ public class ArticleController {
     public Page<Article> find(Pageable pageable) {
         return articleService.find(pageable);
     }
-
 }

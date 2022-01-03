@@ -136,6 +136,22 @@
             }
             $("#list-post").html(listHtml);
         }
+
+        function pageController(pageNum) {
+            $.ajax({
+                type: "GET",
+                url: "/page",
+                data: {
+                    page: pageNum,
+                    size: 10,
+                    sortBy: "createdDate-desc"
+                },
+                success: (page) => {
+                    console.log(page)
+                }
+            })
+        }
+
     </script>
 </head>
 
@@ -166,6 +182,23 @@
             <button type="button" class="btn btn-primary" onclick="writeArticle()">저장하기</button>
         </div>
     </div>
+    <nav aria-label="Page navigation example">
+        <ul class="pagination">
+            <li class="page-item">
+                <a class="page-link" href="#" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+            <li class="page-item"><div class="page-link" onclick="pageController(0)">1</div></li>
+            <li class="page-item"><div class="page-link" onclick="pageController(1)">2</div></li>
+            <li class="page-item"><div class="page-link" onclick="pageController(2)">3</div></li>
+            <li class="page-item">
+                <a class="page-link" href="#" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
     <table class="table">
         <thead>
         <tr>
